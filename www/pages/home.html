@@ -1,0 +1,39 @@
+<ion-view view-title="Wheatemp, l'application de vos rêves.">
+    <ion-pane>
+    <ion-header-bar align-title="center" class="bar-stable">
+    </ion-header-bar>
+    <ion-content style="background-image:url('img/background.jpg')">
+      <div class="card text-center">
+        <div ng-if="data.city"><h4>Quel est la météo à {{ data.city }} ?</h4></div>
+        <center>
+          <input ng-model="data.city" ng-change="onSearchChange()" type="text" style="text-align:center;" placeholder="Saisissez votre ville">
+        </center>
+      </div>
+      <div ng-if="content == null">
+        <div ng-hide="loading">
+          <div class="text-center">
+            <div class="card text-center">
+              <img width="50" src="img/loading.gif"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="content">
+        <section ng-controller="ContentCtrl">
+          <div class="card text-center">
+            <div ng-if="wheater_data.current.condition.icon">
+              <img src="http:{{ wheater_data.current.condition.icon }}"/>
+              <h2>{{ wheater_data.current.temp_c }} °C</h2><br/>
+              <div ng-if="wheater_data.location.country.length > 0">
+                Pays: {{ wheater_data.location.country }}
+              </div>
+              <div ng-if="wheater_data.location.region.length > 0">
+                Région: {{ wheater_data.location.region }}
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </ion-content>
+  </ion-pane>
+</ion-view>
