@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
       { title: 'Informations', link: 'infos' }
     ];
   })
-  .controller('HomeCtrl', function($scope, $timeout, $http, apixuProvider) {
+  .controller('HomeCtrl', function($scope, $timeout, $http) {
     var values = [];
     var api_key = "ccccffdd46f94b809f1103632162112";
     var interval = null;
@@ -45,7 +45,6 @@ angular.module('starter.controllers', [])
         if (isDone($scope.data.city) == true) {
           getCityInformations($scope.data.city, function(err, result) {
             if (err) {
-              console.log("An error occured !");
               clearInterval(interval);
               values = [];
               interval = null;
@@ -53,6 +52,7 @@ angular.module('starter.controllers', [])
             }
             else {
               $scope.content = result;
+              $scope.loading = true;
             }
           });
 
@@ -65,7 +65,7 @@ angular.module('starter.controllers', [])
 
     $scope.onSearchChange = function () {
       if ($scope.data.city.length > 0) {
-        apixuProvider.test();
+        //apixuProvider.test();
         if (interval == null) {
           interval = setInterval(checkCityContent, 250);
         }
@@ -83,13 +83,4 @@ angular.module('starter.controllers', [])
   .controller('ContentCtrl', function($scope, $ionicModal, $timeout) {
     $scope.wheater_data = angular.fromJson($scope.content);
     $scope.loading = true;
-    //console.log($scope.content);
-  }).provider('apixuProvider', function ApixuProvider() {
-  this.$get = function() {
-    return {
-      test: function () {
-        console.log("Coucou");
-      }
-    }
-  }
-});
+  });
